@@ -1,0 +1,33 @@
+{
+  "name": "cm2040_template",
+  "version": "1.0.0",
+  "description": "A template for the mid-term assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-db": "cat db_schema.sql | sqlite3 database.db",
+    "clean-db": "rm -rf database.db",
+    "start": "nodemon index.js"
+  },
+  "author": "Simon Katan",
+  "license": "ISC",
+  "dependencies": {
+    "-": "^0.0.1",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
+    "nodemon": "^2.0.20",
+    "save": "^2.9.0",
+    "sqlite3": "^5.1.2"
+  },
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
+  }
+}

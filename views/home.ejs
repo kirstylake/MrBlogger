@@ -1,0 +1,151 @@
+<!-- Home file which renders the home page and adjusts according to the type of user logged in-->
+<%- include("_header") -%>
+    <div class="card" id="content">
+        <div id="innerContent" class="px-2">
+            <h1 id="heading"></h1>
+            <h2 id="draftTitle"></h2>
+            <div class="card-body">
+                <div class="table-responsive-sm">
+                    <table id="draftsTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Article Title</th>
+                                <th>Subtitle</th>
+                                <th>Author</th>
+                                <th>Create Date</th>
+                                <th>Change Date</th>
+                                <th class="d-print-none">
+                                    <a class="btn btn-sm btn-success" href="/create">Add</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (const article of model) { %>
+                                <% if (article.publish_date==null) { %>
+                                    <tr>
+                                        <td>
+                                            <%= article.article_name %>
+                                        </td>
+                                        <td>
+                                            <%= article.article_subtitle %>
+                                        </td>
+                                        <td>
+                                            <% for (const users of allUsers) { %>
+                                                <% if (article.user_id==users.user_id) { %>
+                                                    <%= users.user_name %>
+                                                        <% } %>
+                                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <%= article.create_date%>
+                                        </td>
+                                        <td>
+                                            <%= article.change_date%>
+                                        </td>
+                                        <td class="d-print-none">
+                                            <form action="publish/<%= article.article_id %>" method="post">
+                                                <a class="btn btn-sm btn-warning"
+                                                    href="edit/<%= article.article_id %>">Edit</a>
+                                                <a id="deleteBtn" class="btn btn-sm btn-danger"
+                                                    href="delete/<%= article.article_id %>">Delete</a>
+                                                <button class="btn btn-sm btn-primary" type="submit" id="publishBtn"
+                                                    method="post">Publish</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <h2 id="publishTitle"></h2>
+                <div class="table-responsive-sm">
+                    <table id="publishTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Article Title</th>
+                                <th>Subtitle</th>
+                                <th>Author</th>
+                                <th>Publish Date</th>
+                                <th>Create Date</th>
+                                <th>Change Date</th>
+                                <th>Likes</th>
+                                <th>Views</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (const article of model) { %>
+                                <% if (article.publish_date !==null) { %>
+                                    <tr>
+                                        <td>
+                                            <%= article.article_name %>
+                                        </td>
+                                        <td>
+                                            <%= article.article_subtitle %>
+                                        </td>
+                                        <td>
+                                            <% for (const users of allUsers) { %>
+                                                <% if (article.user_id==users.user_id) { %>
+                                                    <%= users.user_name %>
+                                                        <% } %>
+                                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <%= article.publish_date %>
+                                        </td>
+                                        <td>
+                                            <%= article.create_date %>
+                                        </td>
+                                        <td>
+                                            <%= article.change_date %>
+                                        </td>
+                                        <td>
+                                            <%= article.likes %>
+                                        </td>
+                                        <td>
+                                            <%= article.views %>
+                                        </td>
+                                        <td class="d-print-none">
+                                            <form action="view/<%= article.article_id %>" method="post">
+                                                <a id="deleteBtn" class="btn btn-sm btn-danger deleteBtn"
+                                                    href="delete/<%= article.article_id %>">Delete</a>
+                                                <button class="btn btn-sm btn-info " type="submit" id="viewBtn">View
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                <script>
+                    var rowCount = document.getElementById("draftsTable").rows.length - 1; // For rows
+                    var rowCount2 = document.getElementById("publishTable").rows.length - 1; // For columns
+                    console.log(rowCount);
+                    document.getElementById("draftTitle").innerHTML = "Draft Articles(" + rowCount + ")";
+                    document.getElementById("publishTitle").innerHTML += "Published Articles(" + rowCount2 + ")";
+                </script>
+                <% if(!user.author){ %>
+                    <script>
+                        document.getElementById("draftsTable").hidden = true;
+                        document.getElementById("draftTitle").hidden = true;
+                        document.getElementById("heading").innerHTML = 'Reader Home';
+                        var elements = document.getElementsByClassName("deleteBtn");
+                        console.log(elements);
+                        for (var i = 0; i < elements.length; i++) {
+                            elements[i].style.display = 'none';
+                        }
+                    </script>
+                    <% } else { %>
+                        <script>
+                            document.getElementById("draftsTable").hidden = false;
+                            document.getElementById("draftTitle").hidden = false;
+                            document.getElementById("heading").innerHTML = 'Author Home';
+                        </script>
+                        <% } %>
+        </div>
+    </div>
+
+    <%- include("_footer") -%>

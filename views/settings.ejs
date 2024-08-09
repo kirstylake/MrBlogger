@@ -1,0 +1,57 @@
+<!-- Settings file which shows the user settings to adjust their data stored in table Users-->
+<%- include("_header") -%>
+
+    <body>
+        <div class="card" id="content">
+            <h1>Settings</h1>
+            <div class="card-body">
+                <form action="/settings/<%= user.user_id %>" method="post">
+                    <div class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-2" for="blog_title">Blog Title</label>
+                            <div class="col-sm-8">
+                                <input autofocus id='blog_title' class="form-control" name="blog_title"
+                                    value="<%= user.blog_title %>" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-2" for="blog_subtitle">Subtitle</label>
+                            <div class="col-sm-8">
+                                <input autofocus id='blog_subtitle' class="form-control" name="blog_subtitle"
+                                    value="<%= user.blog_subtitle %>" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-2" for="user_name">Name</label>
+                            <div class="col-sm-8">
+                                <input autofocus id=user_name class="form-control" name="user_name"
+                                    value="<%= user.user_name %>" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-2" for="user_email">Email</label>
+                            <div class="col-sm-8">
+                                <input autofocus id=user_email class="form-control" name="user_email"
+                                    value="<%= user.user_email %>" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <input type="submit" value="Update" class=" btn-default btn-warning" />
+                                <a class=" btn-default btn-danger" id="cancelBtn" href="/home">Cancel</a>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </body>
+
+    <% if(!user.author){ %>
+        <script>
+            document.getElementById("blog_title").setAttribute('readonly', true);
+            document.getElementById("blog_subtitle").setAttribute('readonly', true);
+            console.log("in script");
+        </script>
+        <%}%>
+            <%- include("_footer") -%>
